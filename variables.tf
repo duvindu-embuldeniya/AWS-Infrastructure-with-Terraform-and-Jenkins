@@ -1,7 +1,7 @@
-variable "terraformbucket_name" {
-  type        = string
-  description = "Remote state bucket name"
-}
+# variable "terraformbucket_name" {
+#   type        = string
+#   description = "Remote state bucket name"
+# }
 
 variable "vpc_cidr" {
   type        = string

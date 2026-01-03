@@ -1,5 +1,3 @@
-terraformbucket_name = 
-
 vpc_cidr             = 
 vpc_name             = 
 cidr_public_subnet   = 
