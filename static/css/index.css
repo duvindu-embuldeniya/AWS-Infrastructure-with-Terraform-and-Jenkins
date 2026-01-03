@@ -1,5 +1,5 @@
 body{
-	background-color:#184323!important;
+	background-color:#F8F8F8!important;
 }
 
 #profile-wrapper{
@@ -7,8 +7,8 @@ body{
 }
 
 #profile-pic{
-	width:20px;
-	height: 20px;
+	width:150px;
+	height: 150px;
 	border-radius: 50%;
 	margin-left: auto;
   	margin-right: auto;
