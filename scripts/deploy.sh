@@ -4,7 +4,7 @@
 source ~/venv/bin/activate
 
 # cd into the project code
-cd /var/www/project10
+cd /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins
 
 # pull the latest codebase
 git pull
