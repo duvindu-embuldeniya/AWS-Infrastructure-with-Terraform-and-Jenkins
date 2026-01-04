@@ -7,5 +7,5 @@
 
 terraform.tfvars
 
-staticfiles/
+# staticfiles/
 .env
