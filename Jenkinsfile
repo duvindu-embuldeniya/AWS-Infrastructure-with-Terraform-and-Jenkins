@@ -1,8 +1,53 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
     stages {
-        stage('Deploy') {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'ls -lart'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
+                    sh '''
+                        echo "================ Terraform Init ================"
+                        terraform init
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
+                    sh '''
+                        echo "================ Terraform Plan ================"
+                        terraform plan -var-file=terraform.tfvars -out=tfplan
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
+                    sh '''
+                        echo "================ Terraform Apply ================"
+                        terraform apply -auto-approve tfplan
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
             steps {
                 sshagent(['ec2-jenkins-key']) {
                     sh '''
@@ -11,6 +56,15 @@ pipeline {
                     '''
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline completed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed!"
         }
     }
 }
