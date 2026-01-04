@@ -1,75 +1,69 @@
 pipeline {
     agent any
 
-    parameters {
-        booleanParam(name: 'PLAN_TERRAFORM', defaultValue: false, description: 'Run Terraform plan')
-        booleanParam(name: 'APPLY_TERRAFORM', defaultValue: false, description: 'Run Terraform apply')
-        booleanParam(name: 'DEPLOY_APP', defaultValue: true, description: 'Deploy application to EC2')
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        TF_WORKSPACE = "${WORKSPACE}/terraform"
+    }
+
+    triggers {
+        // Trigger on every GitHub push
+        githubPush()
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
-                sh 'ls -lart'
+                git branch: 'main', url: 'https://github.com/duvindu-embuldeniya/AWS-Infrastructure-with-Terraform-and-Jenkins.git'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                sh '''
-                    echo "================ Terraform Init ================"
-                    terraform init
-                '''
+                dir("${TF_WORKSPACE}") {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                dir("${TF_WORKSPACE}") {
+                    sh 'terraform validate'
+                }
             }
         }
 
         stage('Terraform Plan') {
-            when {
-                expression { params.PLAN_TERRAFORM }
-            }
             steps {
-                sh '''
-                    echo "================ Terraform Plan ================"
-                    terraform plan -var-file=tfvars.sample
-                '''
+                dir("${TF_WORKSPACE}") {
+                    sh 'terraform plan -out=tfplan'
+                }
             }
         }
 
         stage('Terraform Apply') {
-            when {
-                expression { params.APPLY_TERRAFORM }
-            }
             steps {
-                sh '''
-                    echo "================ Terraform Apply ================"
-                    terraform apply -var-file=tfvars.sample -auto-approve
-                '''
-            }
-        }
-
-        stage('Deploy to EC2') {
-            when {
-                expression { params.DEPLOY_APP }
-            }
-            steps {
-                sshagent(['ec2-jenkins-key']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@16.171.242.146 \
-                        "bash /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins/scripts/deploy.sh"
-                    '''
+                dir("${TF_WORKSPACE}") {
+                    sh 'terraform apply -auto-approve tfplan'
                 }
             }
         }
+
     }
 
     post {
+        always {
+            echo 'Cleaning workspace...'
+            cleanWs()
+        }
         success {
-            echo "✅ Pipeline completed successfully!"
+            echo 'Terraform stages completed successfully!'
         }
         failure {
-            echo "❌ Pipeline failed!"
+            echo 'Terraform stages failed. Check logs!'
         }
     }
 }
