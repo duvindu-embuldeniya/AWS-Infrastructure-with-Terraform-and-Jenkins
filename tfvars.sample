@@ -1,0 +1,11 @@
+vpc_cidr             = 
+vpc_name             = 
+cidr_public_subnet   = 
+cidr_private_subnet  = 
+eu_availability_zone = 
+
+public_key = 
+ec2_ami_id = 
+dev_proj_1_acm_arn = 
+
+  
