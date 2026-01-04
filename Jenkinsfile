@@ -1,19 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        booleanParam(
-            name: 'PLAN_TERRAFORM',
-            defaultValue: false,
-            description: 'Run Terraform plan'
-        )
-        booleanParam(
-            name: 'APPLY_TERRAFORM',
-            defaultValue: false,
-            description: 'Run Terraform apply'
-        )
-    }
-
     stages {
 
         stage('Checkout Source Code') {
@@ -37,9 +24,6 @@ pipeline {
         }
 
         stage('Terraform Plan') {
-            when {
-                expression { params.PLAN_TERRAFORM }
-            }
             steps {
                 dir("${env.WORKSPACE}/AWS-Infrastructure-with-Terraform-and-Jenkins") {
                     sh '''
@@ -51,9 +35,6 @@ pipeline {
         }
 
         stage('Terraform Apply') {
-            when {
-                expression { params.APPLY_TERRAFORM }
-            }
             steps {
                 dir("${env.WORKSPACE}/AWS-Infrastructure-with-Terraform-and-Jenkins") {
                     sh '''
