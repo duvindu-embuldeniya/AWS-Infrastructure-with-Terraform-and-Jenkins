@@ -1,6 +1,6 @@
 # Project Setup
 
-![Project Banner](https://drive.google.com/file/d/1qx-3so095f0DlO0LwoD5Vo7YU-JedrEv/view?usp=drive_link)
+![Project Banner](https://drive.google.com/uc?export=view&id=1qx-3so095f0DlO0LwoD5Vo7YU-JedrEv)
 
 ## Getting Started
 
@@ -57,5 +57,5 @@ Then, the development server will be started at http://127.0.0.1:8000/
 
 Additional images / references:
 
-- Image 2: ![Image 2](https://drive.google.com/file/d/12a-VKrVae49zyovg8JSW-5tISHFPJMKT/view?usp=drive_link)
-- Image 3: ![Image 3](https://drive.google.com/file/d/1_VgXQMt0v5B48iQzii5ALvtqyZtuogxp/view?usp=drive_link)
+- Image 2: ![Image 2](https://drive.google.com/uc?export=view&id=12a-VKrVae49zyovg8JSW-5tISHFPJMKT)
+- Image 3: ![Image 3](https://drive.google.com/uc?export=view&id=1_VgXQMt0v5B48iQzii5ALvtqyZtuogxp)
