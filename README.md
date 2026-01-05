@@ -1,23 +1,14 @@
 # AWS Infrastructure with Terraform and Jenkins
-
-![Project Banner](https://drive.google.com/uc?export=view&id=1qx-3so095f0DlO0LwoD5Vo7YU-JedrEv)
-
 A repository demonstrating AWS infrastructure provisioning with Terraform and CI/CD automation using Jenkins.
 
 ---
 
 ## Tech Stack
-
-![Tech Stack](https://drive.google.com/uc?export=view&id=1tqwYJFscuV1e2U-cH3eQjMnL66nKNNpH)
-
 Source: [Tech Stack image](https://drive.google.com/file/d/1tqwYJFscuV1e2U-cH3eQjMnL66nKNNpH/view?usp=drive_link)
 
 ---
 
 ## Jenkins Procedure
-
-![Jenkins Procedure](https://drive.google.com/uc?export=view&id=1oAz2BRyt5-LQTddAvGfgpvW1h6Mdfap1)
-
 Source: [Jenkins Procedure image](https://drive.google.com/file/d/1oAz2BRyt5-LQTddAvGfgpvW1h6Mdfap1/view?usp=drive_link)
 
 ---
