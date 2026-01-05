@@ -55,7 +55,4 @@ Then, the development server will be started at http://127.0.0.1:8000/
 
 ---
 
-Additional images / references:
 
-- Image 2: ![Image 2](https://drive.google.com/uc?export=view&id=12a-VKrVae49zyovg8JSW-5tISHFPJMKT)
-- Image 3: ![Image 3](https://drive.google.com/uc?export=view&id=1_VgXQMt0v5B48iQzii5ALvtqyZtuogxp)
