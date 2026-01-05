@@ -31,10 +31,46 @@ pipeline {
             }
         }
 
+        stage('Terraform Init') {
+            steps {
+                dir("${env.WORKSPACE}") {
+                    sh '''
+                        echo "================ Terraform Init ================"
+                        terraform init
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                dir("${env.WORKSPACE}") {
+                    sh '''
+                        echo "================ Terraform Plan ================"
+                        terraform plan -var-file=terraform.tfvars -out=tfplan
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir("${env.WORKSPACE}") {
+                    sh '''
+                        echo "================ Terraform Apply ================"
+                        terraform apply -auto-approve tfplan
+                    '''
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sshagent(['ec2-jenkins-key']) {
-                    sh 'ssh ubuntu@13.51.159.164 -o StrictHostKeyChecking=no "bash /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins/scripts/deploy.sh"'
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ubuntu@13.51.159.164 \
+                        "bash /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins/scripts/deploy.sh"
+                    '''
                 }
             }
         }
