@@ -2,6 +2,8 @@
 
 ![Project Banner](https://drive.google.com/uc?export=view&id=1qx-3so095f0DlO0LwoD5Vo7YU-JedrEv)
 
+(Banner source: [Google Drive link](https://drive.google.com/file/d/1qx-3so095f0DlO0LwoD5Vo7YU-JedrEv/view?usp=drive_link))
+
 ## Getting Started
 
 1. **Clone the repository to your local machine:**
@@ -54,5 +56,4 @@
 Then, the development server will be started at http://127.0.0.1:8000/
 
 ---
-
 
