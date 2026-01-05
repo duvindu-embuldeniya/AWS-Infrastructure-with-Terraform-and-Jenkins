@@ -31,11 +31,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                sh '''
-                    echo "✅ Test stage running"
-                '''
+                sshagent(['ec2-jenkins-key']) {
+                    sh 'ssh ubuntu@13.51.159.164 -o StrictHostKeyChecking=no "bash /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins/scripts/deploy.sh"'
+                }
             }
         }
     }
