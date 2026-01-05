@@ -5,56 +5,37 @@ pipeline {
         githubPush()
     }
 
+    environment {
+        REPO_URL = 'https://github.com/duvindu-embuldeniya/AWS-Infrastructure-with-Terraform-and-Jenkins.git'
+        BRANCH   = 'main'
+    }
+
     stages {
 
-        stage('Checkout') {
+        stage('Checkout (Clone or Pull)') {
             steps {
-                checkout scm
-                sh 'ls -lart'
-            }
-        }
-
-        stage('Terraform Init') {
-            steps {
-                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
+                dir("${env.WORKSPACE}") {
                     sh '''
-                        echo "================ Terraform Init ================"
-                        terraform init
+                        if [ ! -d ".git" ]; then
+                            echo "📥 First run: cloning repository"
+                            git clone -b ${BRANCH} ${REPO_URL} .
+                        else
+                            echo "🔄 Repo exists: pulling latest changes"
+                            git pull origin ${BRANCH}
+                        fi
+
+                        echo "📂 Workspace contents:"
+                        ls -lart
                     '''
                 }
             }
         }
 
-        stage('Terraform Plan') {
+        stage('Test') {
             steps {
-                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
-                    sh '''
-                        echo "================ Terraform Plan ================"
-                        terraform plan -var-file=terraform.tfvars -out=tfplan
-                    '''
-                }
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                dir('/var/www/AWS-Infrastructure-with-Terraform-and-Jenkins') {
-                    sh '''
-                        echo "================ Terraform Apply ================"
-                        terraform apply -auto-approve tfplan
-                    '''
-                }
-            }
-        }
-
-        stage('Deploy to EC2') {
-            steps {
-                sshagent(['ec2-jenkins-key']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@56.228.10.226 \
-                        "bash /var/www/AWS-Infrastructure-with-Terraform-and-Jenkins/scripts/deploy.sh"
-                    '''
-                }
+                sh '''
+                    echo "✅ Test stage running"
+                '''
             }
         }
     }
