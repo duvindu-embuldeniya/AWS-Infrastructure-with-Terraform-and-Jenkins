@@ -38,11 +38,14 @@ cat /home/ubuntu/.ssh/id_rsa.pub
 clone via ssh url of repo
 sudo mv <project> /var/www/
 
+(in ubuntu )
 cp env.sample .env
 nano .env
 
+(in jenkins)
 cp tfvars.sample terraform.tfvars
 nano terraform.tfvars
+
 
 source ~/venv/bin/activate
 pip install -r requirements.txt
